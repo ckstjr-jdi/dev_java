@@ -23,5 +23,6 @@ public class Variable4 extends Object {
         //내 안에 선언한 메서드 이더라도 main안에서 호출할 땐 인스턴스화
         Variable4 v4 = new Variable4();
         v4.methodA();
+        System.out.println("methodA호출 후");
     }
 }

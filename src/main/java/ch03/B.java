@@ -8,5 +8,12 @@ public class B {
     public static void main(String[] args) {
         int i;
         i = 5;
+        System.out.println(i);
+        B b = new B();
+        System.out.println(b);
+        System.out.println(b.toString());
+        String s = "hello";
+        System.out.println(s);
+
     }
 }

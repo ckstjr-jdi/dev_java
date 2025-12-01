@@ -9,6 +9,7 @@ public class TextField1 implements ActionListener {
     JFrame jf = new JFrame();
     JButton btn_send = new JButton("전송");// 버튼 생성
     JTextField jtf_msg = new JTextField(20);
+    String msg = "";
     //화면그리기 메서드 구현
     public void initDisplay(){
         System.out.println("initDisplay 호출");

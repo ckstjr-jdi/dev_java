@@ -8,6 +8,7 @@ public class A3 {
         System.out.println(a5.i);
     }
     public static void main(String[] args) {
+
         methodA();
     }
 }

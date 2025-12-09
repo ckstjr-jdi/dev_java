@@ -40,8 +40,10 @@ public class DemoServer extends JFrame implements Runnable, ActionListener {
         try{
             //서버소켓 생성하기
             server = new ServerSocket(g_port);
-            jta_log.append("ServerSocket Ready...\n");
-            while(!isStop){
+            jta_log.append("ServerSocket Ready...\n");//여기까지는 출력됨 -
+            while(!isStop){//while문 진입 안되는 경우 - 조건식이 false일 때
+                //기다림... 클라이언트가 접속을 할 때까지 기다림
+                //클라이언트측 - new Socket(서버IP, 포트번호)
                 client = server.accept();
                 System.out.println(client);
                 jta_log.append("접속해온 사람 => "+client+"\n");
@@ -96,7 +98,7 @@ public class DemoServer extends JFrame implements Runnable, ActionListener {
         this.add("North",jp_north);
         this.add("Center",jsp_log);
         this.add("South",jp_south);
-        this.setSize(500,400);
+        this.setSize(800,400);
         this.setVisible(true);
 
     }
@@ -132,5 +134,31 @@ public class DemoServer extends JFrame implements Runnable, ActionListener {
             }
 
         }//end of 서버시작
+        //서버 다운 버튼
+        else if(obj == jbtn_down){
+            jta_log.append("서버 종료 요청...\n");
+            //DemoServer 하나의 인스턴스에 대해서 공유됨 - isStop -> volatile붙임
+            //isStop변수는 여러 스레드가 동시에 볼 수 있는 공유되는 변수이다.
+            //하나의 서버 인스턴스에 대해서만 공유됨. 만일 다른 인스턴스를 하게 되면 새로운 정보 갖는다.
+            //만일 static을 붙이면 하나의 프로세스에 대해서는 모두 공유가됨
+            isStop = true;//while(!isStop){...}루프 탈출하는 코드
+            try{
+                //accept()를 깨우기 위해 서버소켓 닫기
+                if(server!=null && !server.isClosed()){
+                    server.close();
+                }
+                if(globalList != null){
+                    for(DemoServerThread dst : globalList){
+                        dst.closeThread();
+                    }
+                    globalList.clear();// 모두를 비운다.
+                }
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        else if(obj == jbtn_clear){
+            jta_log.setText("");
+        }
     }//end of actionPerformed
 }

@@ -1,6 +1,7 @@
 package anet.server1;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ObjectInputStream;
@@ -12,10 +13,11 @@ public class DemoClient extends JFrame implements ActionListener {
     ObjectInputStream   ois      = null;
     ObjectOutputStream  oos      = null;
     String              nickName = null;
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
-    }
+    }//end of actionPerformed
     public void init(){
         try{
             socket = new Socket("192.168.0.32",3000);

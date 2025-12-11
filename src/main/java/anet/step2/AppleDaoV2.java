@@ -7,21 +7,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+
 import static util.CustomLogger.logger;
 
 //DAO(Data Access Object)
-public class AppleDao {
+public class AppleDaoV2 {
     //선언부
     DBConnectionMgr     dbMgr = DBConnectionMgr.getInstance();
     Connection          con = null;
     PreparedStatement   pstmt = null;
     ResultSet           rs = null;
-    AppleZipCode azc = null;
-    public AppleDao() {}
+    public AppleDaoV2() {}
     //화면과 로직은 분리 되어야 한다.
-    public AppleDao(AppleZipCode azc){
-        this.azc = azc;
-    }
     //우편번호와 주소 가져오기
     /***************************************************
      * 제목 : 우편번호와 주소 가져오기
@@ -80,19 +77,8 @@ public class AppleDao {
             //문제제기 : 만일 두 번 연속해서 조회할 경우 앞에 조회결과가 남아 있다.
             //기존에 조회된 결과는 삭제하고 새로 출력한다.
             //만일 참이면 조회결과가 있다.이고, 만일 거짓이면 조회결과가 없음
-            if (v.size() > 0) {
-                while (azc.dtm_zipcode.getRowCount() > 0) {
-                    azc.dtm_zipcode.removeRow(0);
-                }
-            }//end of if
-            //조회된 결과를 DefaultTableModel에 매칭하기
-            for (int x = 0; x < zvos.length; x++) {
-                //벡터 생성하기
-                Vector<Object> oneRow = new Vector<>();
-                oneRow.add(0, zvos[x].getZipcode());
-                oneRow.add(1, zvos[x].getAddress());
-                azc.dtm_zipcode.addRow(oneRow);
-            }//end of for
+
+
         }catch (SQLException se){
             logger("[[SQLException]] : "+sql.toString());
         }catch(Exception ex){
@@ -138,7 +124,7 @@ public class AppleDao {
     }//end of getZdoList
 
     public static void main(String[] args) {
-        AppleDao appleDao = new AppleDao();
+        AppleDaoV2 appleDao = new AppleDaoV2();
         appleDao.getZdoList();
     }
 }

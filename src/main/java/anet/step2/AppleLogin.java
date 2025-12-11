@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AppleLogin extends JFrame implements ActionListener {
+
     String imgPath = "src\\image\\";
     ImageIcon ig 		= new ImageIcon(imgPath+"main.png");
     JLabel jlb_id 		= new JLabel("아이디");
@@ -22,19 +23,26 @@ public class AppleLogin extends JFrame implements ActionListener {
             new JButton(
                     new ImageIcon(imgPath+"confirm.png"));
     String 				nickName= null;//닉네임 등록
+    AppleClient ac = null;
 
         @Override
     public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             //로그인 요청하기
             if(obj == jbtn_login) {
-
+                //사용자가 입력한 아이디 담기
+                String mem_id = jtf_id.getText();
+                //사용가자 입력한 비번 담기
+                String mem_pw = jtf_pw.getText();
+                AppleDaoV2 aDao = new AppleDaoV2();
+                nickName = aDao.login(mem_id,mem_pw);
+                //AppleClient 인스턴스화 할 때 조회된 대화명을 넘겨야 함.
+                ac = new AppleClient(nickName);
             } //end of 로그인
 
             //회원가입
             else if(obj == jbtn_join) {
                 AppleMemberShip ams = new AppleMemberShip();
-                //ams.initDisplay();
             }//end of 회원가입
     }
 

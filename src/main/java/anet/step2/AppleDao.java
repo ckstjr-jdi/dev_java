@@ -22,6 +22,7 @@ public class AppleDao {
     public AppleDao(AppleZipCode azc){
         this.azc = azc;
     }
+
     //우편번호와 주소 가져오기
     /***************************************************
      * 제목 : 우편번호와 주소 가져오기

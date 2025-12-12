@@ -18,7 +18,31 @@ public class AppleDaoV2 {
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     public AppleDaoV2() {}
-
+    /*************************************************************
+     * 제목 : 대화명 변경하기
+     * @param mem_nickname, mem_changeNickname
+     * @return int
+     *************************************************************/
+    public int nickNameChange(String mem_nickname, String mem_changeNickname) {
+        int result = -1;
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE member          ");
+        sql.append(" SET mem_nickname = ?  ");
+        sql.append(" WHERE mem_nickname = ?");
+        try {
+            con = dbMgr.getConnection();
+            pstmt = con.prepareStatement(sql.toString());
+            pstmt.setString(1,mem_changeNickname);
+            pstmt.setString(2,mem_nickname);
+            result = pstmt.executeUpdate();
+            logger("result 1이면 성공, 0이면 실패: "+result);
+        }catch(Exception e){
+            logger(e);
+        }finally{
+            dbMgr.freeConnection(con, pstmt);
+        }
+        return result;
+    }
     /*************************************************************
      * 제목 : 로그인 구현하기
      * @param userId 사용자가 입력한 아이디
@@ -214,6 +238,7 @@ public class AppleDaoV2 {
 //        int result = appleDao.memberInsert(mVO);
 //        if(result == 1) System.out.println("입력 성공");
 //        else if(result == 0) System.out.println("등록 실패");
-        appleDao.login("apple","123");
+        //appleDao.login("apple","123");
+        appleDao.nickNameChange("찬돌","양찬돌");
     }
 }

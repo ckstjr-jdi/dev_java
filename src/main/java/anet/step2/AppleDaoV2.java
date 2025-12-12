@@ -59,6 +59,14 @@ public class AppleDaoV2 {
      * @return result : 1이면 등록 성공, 0이면 등록 실패
      *************************************************************/
     public int memberInsert(MemberVO mVO){
+        System.out.println("memberInsert");
+        System.out.println(mVO.getMem_id());
+        System.out.println(mVO.getMem_pw());
+        System.out.println(mVO.getMem_nickname());
+        System.out.println(mVO.getMem_name());
+        System.out.println(mVO.getGender());
+        System.out.println(mVO.getZipcode());
+        System.out.println(mVO.getAddress());
         int result = -1;//1이면 회원가입 성공, 0이면 회원가입 실패
         StringBuilder sql = new StringBuilder();
         int i = 1;
@@ -80,6 +88,7 @@ public class AppleDaoV2 {
             System.out.println("result : "+result);
         }catch(SQLException se){
             System.out.println("[SQLException]: "+sql);
+            logger(se.getMessage());
         }catch(Exception e){
             System.out.println("[Exception]: "+e.getMessage());
         }finally {
@@ -194,17 +203,17 @@ public class AppleDaoV2 {
     public static void main(String[] args) {
         AppleDaoV2 appleDao = new AppleDaoV2();
         //appleDao.getZdoList();
-        //MemberVO mVO = new MemberVO();
-        //mVO.setMem_id("nice");
-        //mVO.setMem_pw("123");
-        //mVO.setMem_nickname("나신입");
-        //mVO.setMem_name("강감찬");
-        //mVO.setGender("남자");
-        //mVO.setZipcode("12356");
-        //mVO.setAddress("서울시 영등포구 당산동");
-        //int result = appleDao.memberInsert(mVO);
-        //if(result == 1) System.out.println("입력 성공");
-        //else if(result == 0) System.out.println("등록 실패");
-        appleDao.login("kiwi","123");
+//        MemberVO mVO = new MemberVO();
+//        mVO.setMem_id("nice");
+//        mVO.setMem_pw("123");
+//        mVO.setMem_nickname("나신입");
+//        mVO.setMem_name("강감찬");
+//        mVO.setGender("남자");
+//        mVO.setZipcode("12356");
+//        mVO.setAddress("서울시 영등포구 당산동");
+//        int result = appleDao.memberInsert(mVO);
+//        if(result == 1) System.out.println("입력 성공");
+//        else if(result == 0) System.out.println("등록 실패");
+        appleDao.login("apple","123");
     }
 }

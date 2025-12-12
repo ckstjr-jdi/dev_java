@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AppleLogin extends JFrame implements ActionListener {
-
     String imgPath = "src\\image\\";
     ImageIcon ig 		= new ImageIcon(imgPath+"main.png");
     JLabel jlb_id 		= new JLabel("아이디");
@@ -24,36 +23,44 @@ public class AppleLogin extends JFrame implements ActionListener {
                     new ImageIcon(imgPath+"confirm.png"));
     String 				nickName= null;//닉네임 등록
     AppleClient ac = null;
-
-        @Override
+    @Override
     public void actionPerformed(ActionEvent e) {
-            Object obj = e.getSource();
-            //로그인 요청하기
-            if(obj == jbtn_login) {
-                //사용자가 입력한 아이디 담기
-                String mem_id = jtf_id.getText();
-                //사용가자 입력한 비번 담기
-                String mem_pw = jtf_pw.getText();
-                AppleDaoV2 aDao = new AppleDaoV2();
-                nickName = aDao.login(mem_id,mem_pw);
-                //AppleClient 인스턴스화 할 때 조회된 대화명을 넘겨야 함.
-                ac = new AppleClient(nickName);
-            } //end of 로그인
+        Object obj = e.getSource();
+        //로그인 요청하기
+        if (obj == jbtn_login) {
+            //사용자가 입력한 아이디 담기
+            String mem_id = jtf_id.getText();
+            //사용자가 입력한 비번 담기
+            String mem_pw = jtf_pw.getText();
+            AppleDaoV2 aDao = new  AppleDaoV2();
+            nickName = aDao.login(mem_id,mem_pw);
+            //AppleClient 인스턴스화 할 때 조회된 대화명을 넘겨야 함.
+            this.dispose();
+            ac = new AppleClient(nickName);
+        }//end of 로그인
+        //회원가입 요청
+        else if(obj == jbtn_join) {
+            AppleMemberShip ams = new AppleMemberShip();
 
-            //회원가입
-            else if(obj == jbtn_join) {
-                AppleMemberShip ams = new AppleMemberShip();
-            }//end of 회원가입
+        }//end of 회원가입
     }
 
     public static void main(String[] args) {
         AppleLogin aLogin = new AppleLogin();
         aLogin.initDisplay();
     }
-    public void initDisplay() {
-        jbtn_join.addActionListener(this);
+    //내부 클래스로 배경 이미지 처리
+    class MyPanel extends JPanel{
+        public void paintComponent(Graphics g) {
+            g.drawImage(ig.getImage(), 0, 0, null);
+            setOpaque(false);
+            super.paintComponent(g);
+        }
+    }
+    public void initDisplay(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         jbtn_login.addActionListener(this);
+        jbtn_join.addActionListener(this);
         this.setContentPane(new MyPanel());
         this.setLayout(null);//디폴트 - BorderLayout
         jlb_id.setBounds(45, 200, 80, 40);
@@ -75,12 +82,5 @@ public class AppleLogin extends JFrame implements ActionListener {
         this.setSize(350, 600);
         this.setVisible(true);
     }
-    //내부 클래스로 배경 이미지 처리
-    class MyPanel extends JPanel{
-        public void paintComponent(Graphics g) {
-            g.drawImage(ig.getImage(), 0, 0, null);
-            setOpaque(false);
-            super.paintComponent(g);
-        }
-    }
+
 }

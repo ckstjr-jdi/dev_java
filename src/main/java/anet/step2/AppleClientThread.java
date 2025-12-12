@@ -32,10 +32,12 @@ public class AppleClientThread extends Thread {
                         //DefaultTableModel에 있는 대화명 변경하기
                         for(int i =0;i<ac.dtm.getRowCount();i++){
                             //대화명을 변경하기 전에 현재 테이블에서 가져온 대화명을 받기
-                            String cname = (String)ac.dtm.getValueAt(i,0);
+                            String cname = (String)ac.dtm.getValueAt(i,1);
                             if(cname.equals(nickName)){
-                                ac.dtm.setValueAt(afterName,i, 0);
+                                ac.dtm.setValueAt(afterName,i, 1);
                                 break;//for문을 빠져 나옴
+                            }else{
+                                logger("여기");
                             }
                         }//end of for
                         ac.jta_display.append(message+"\n");

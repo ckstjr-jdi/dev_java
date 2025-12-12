@@ -20,20 +20,20 @@ public class AppleDaoV2 {
     public AppleDaoV2() {}
     /*************************************************************
      * 제목 : 대화명 변경하기
-     * @param mem_nickname, mem_changeNickname
+     * @param mem_id, mem_nickname
      * @return int
      *************************************************************/
-    public int nickNameChange(String mem_nickname, String mem_changeNickname) {
+    public int nickNameChange(String  mem_id, String mem_nickname ) {
         int result = -1;
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE member          ");
-        sql.append(" SET mem_nickname = ?  ");
-        sql.append(" WHERE mem_nickname = ?");
+        sql.append(" SET mem_nickname = ?  ");//첫번째 ?자리는 새로운 대화명 입력
+        sql.append(" WHERE mem_id = ?      ");//두번째 ?자리는 pk인 아이디 입력
         try {
             con = dbMgr.getConnection();
             pstmt = con.prepareStatement(sql.toString());
-            pstmt.setString(1,mem_changeNickname);
-            pstmt.setString(2,mem_nickname);
+            pstmt.setString(1,mem_nickname);
+            pstmt.setString(2,mem_id);
             result = pstmt.executeUpdate();
             logger("result 1이면 성공, 0이면 실패: "+result);
         }catch(Exception e){
